@@ -1,26 +1,28 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <restaurantForm @create="createRestaurant" />
+  <restaurantList :restaurants="restaurants" />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import RestaurantForm from "@/components/RestaurantForm";
+import RestaurantList from "@/components/RestaurantList";
 export default {
-  name: 'App',
   components: {
-    HelloWorld
-  }
-}
+    RestaurantForm,
+    RestaurantList,
+  },
+  data() {
+    return {
+      restaurants: [],
+    };
+  },
+  methods: {
+    createRestaurant(restaurant) {
+      this.restaurants.push(restaurant);
+      console.log(this.restaurants);
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
