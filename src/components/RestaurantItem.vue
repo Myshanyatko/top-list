@@ -1,17 +1,18 @@
 <template>
   <div class="restaurant-item">
-    <h3>{{ restaurant.name }}</h3>
-    <p>
+    <h3>{{ restaurant.id }}</h3>
+    <div><strong>Название:</strong> {{ restaurant.name }}</div>
+    <div><strong>Описание:</strong> {{ restaurant.body }}</div>
+    <!-- <p>
       Прайс a: <b>{{ restaurant.price.a }}</b>
     </p>
     <p>
       Прайс p: <b>{{ restaurant.price.p }}</b>
-    </p>
+    </p> -->
   </div>
 </template>
 
 <script>
-
 export default {
   props: {
     restaurant: {
