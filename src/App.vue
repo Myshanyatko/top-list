@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-main>
-      <v-container>
+      <v-container style="margin-bottom: 20px">
         <v-dialog
           v-model="dialog"
           persistent
@@ -23,17 +23,33 @@
           </restaurant-form>
         </v-dialog>
       </v-container>
+      <v-container>
+        <restaurant-list :restaurants="sortItems"> </restaurant-list
+      ></v-container>
     </v-main>
   </v-app>
 </template>
 
-<script>
+<script setup> 
 import RestaurantForm from "@/components/RestaurantForm";
+import RestaurantList from "@/components/RestaurantList";
+import { db } from "@/firebase"
+import { collection, getDocs } from "firebase/firestore";
+import {  onMounted } from "vue";
 
+// const restaurants = ref([])
+
+onMounted(async () => {
+  const querySnapshot = await getDocs(collection(db, "restaurans"))
+  querySnapshot.forEach((doc) => {
+    console.log(doc.id, " => ", doc.data())
+  });
+})
 export default {
   name: "App",
   components: {
     RestaurantForm,
+    RestaurantList,
   },
   data() {
     return {
@@ -49,12 +65,6 @@ export default {
   },
   computed: {
     sortItems() {
-      console.log(
-        [...this.restaurants].sort(
-          (item1, item2) =>
-            item2.assessments.general - item1.assessments.general
-        )
-      );
       return [...this.restaurants].sort(
         (item1, item2) => item2.assessments.general - item1.assessments.general
       );

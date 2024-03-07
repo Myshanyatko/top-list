@@ -31,7 +31,14 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col style="display: flex; align-items: center">
+              <v-icon
+                style="margin-right: 8px"
+                cols="auto"
+                size="large"
+                color="primary"
+                icon="mdi-cash"
+              ></v-icon>
               <h4>Оценка прайса</h4>
             </v-col>
           </v-row>
@@ -57,7 +64,14 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col style="display: flex; align-items: center">
+              <v-icon
+                style="margin-right: 8px"
+                cols="auto"
+                size="large"
+                color="primary"
+                icon="mdi-sofa-single-outline"
+              ></v-icon>
               <h4>Оценка интерьера</h4>
             </v-col>
           </v-row>
@@ -82,7 +96,14 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col>
+            <v-col style="display: flex; align-items: center">
+              <v-icon
+                style="margin-right: 8px"
+                cols="auto"
+                size="large"
+                color="primary"
+                icon="mdi-food-drumstick-outline"
+              ></v-icon>
               <h4>Оценка еды</h4>
             </v-col>
           </v-row>

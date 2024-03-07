@@ -1,41 +1,31 @@
 <template>
-  <!-- <div>
-    <h2>Заведения</h2>
-    <div class="restaurant">
-      <transition-group name="user-list">
-        <restaurant-item
-          v-for="restaurant in restaurants"
-          :restaurant="restaurant"
-          :key="restaurant.id"
-        />
-      </transition-group>
-    </div>
-  </div> -->
-  <div v-if="restaurants.length > 0">
-    <table>
+  <div v-if="restaurants?.length > 0">
+    <v-table>
       <thead>
         <tr>
-          <th>Место</th>
-          <th>Название</th>
-          <th>Баллы</th>
+          <th class="text-left">Место</th>
+          <th class="text-left">Название</th>
+          <th class="text-left">Город</th>
+          <th class="text-left">Оценка</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(restaurant, index) in restaurants" :key="restaurant.id">
+        <tr
+          v-for="(item, index) in restaurants"
+          :key="index"
+        >
           <td>{{ index + 1 }}</td>
-          <td>{{ restaurant.name }}</td>
-          <td>{{ restaurant?.assessments?.general }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.city }}</td>
+          <td>{{ item.assessments.general }}</td>
         </tr>
       </tbody>
-    </table>
-    <!-- <restaurant-item
-      v-for="restaurant in restaurants"
-      :restaurant="restaurant"
-      :key="restaurant.id"
-      @remove="$emit('remove', restaurant)"
-    /> -->
+    </v-table>
   </div>
-  <p v-else style="color: red">Список пуст</p>
+  <v-alert
+    v-else
+    text=" Список пуст"
+  ></v-alert>
 </template>
 
 <script>
@@ -46,17 +36,21 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      headers: [
+        {
+          align: "start",
+          key: "name",
+          sortable: false,
+          title: "Название",
+        },
+        { key: "interiorP", title: "Интерьер Паша" },
+        { key: "interiorA", title: "Интерьер Арина" },
+      ],
+    };
+  },
 };
 </script>
 
-<style scoped>
-table {
-  width: 100%;
-  text-align: left;
-  border-spacing: inherit;
-}
-table td,
-tr {
-  border: solid 1px;
-}
-</style>
+<style scoped></style>
