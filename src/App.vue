@@ -30,45 +30,51 @@
   </v-app>
 </template>
 
-<script setup> 
+<script>
 import RestaurantForm from "@/components/RestaurantForm";
 import RestaurantList from "@/components/RestaurantList";
-import { db } from "@/firebase"
-import { collection, getDocs } from "firebase/firestore";
-import {  onMounted } from "vue";
+import { db } from "@/firebase";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
+import { ref, onMounted, computed } from "vue";
 
-// const restaurants = ref([])
-
-onMounted(async () => {
-  const querySnapshot = await getDocs(collection(db, "restaurans"))
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, " => ", doc.data())
-  });
-})
 export default {
-  name: "App",
   components: {
     RestaurantForm,
     RestaurantList,
   },
+
   data() {
     return {
-      restaurants: [],
       dialog: false,
     };
   },
-  methods: {
-    createRestaurant(restaurant) {
-      console.log(restaurant);
-      this.restaurants.push(restaurant);
-    },
-  },
-  computed: {
-    sortItems() {
-      return [...this.restaurants].sort(
+
+  setup() {
+
+    let restaurants = ref([]);
+    const collectionRestaurants = collection(db, "restaurants");
+
+    onMounted(() => {
+      onSnapshot(collectionRestaurants, (querySnapshot) => {
+        let values = [];
+        querySnapshot.forEach((rest) => {
+          values.push({ ...rest.data(), id: rest.id });
+        });
+        restaurants.value = values;
+      });
+    });
+
+    const sortItems = computed(() => {
+      return [...restaurants.value].sort(
         (item1, item2) => item2.assessments.general - item1.assessments.general
       );
-    },
+    });
+
+    const createRestaurant = (restaurant) => {
+      addDoc(collectionRestaurants, restaurant);
+    };
+
+    return { sortItems, createRestaurant };
   },
 };
 </script>
